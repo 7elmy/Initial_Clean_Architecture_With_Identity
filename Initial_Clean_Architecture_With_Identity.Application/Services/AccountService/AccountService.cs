@@ -62,8 +62,7 @@ public class AccountService : IAccountService
             return registerValidatorResponse;
         }
 
-        //todo: map model
-        var newUser = new AppUser();
+        var newUser = model.Map();
 
         var createUserResponse = await CreateUser(newUser, model.Password);
 
@@ -73,9 +72,10 @@ public class AccountService : IAccountService
             return registerValidatorResponse;
         }
 
-        var registrationResponse = new RegistrationResponse();
-
-        registrationResponse.Email = model.Email;
+        var registrationResponse = new RegistrationResponse()
+        {
+            Email = model.Email
+        };
 
         return registrationResponse;
     }
