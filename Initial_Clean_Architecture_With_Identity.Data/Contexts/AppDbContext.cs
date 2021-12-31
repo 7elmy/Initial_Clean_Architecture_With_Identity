@@ -25,7 +25,12 @@ namespace Initial_Clean_Architecture_With_Identity.Data.Contexts
 
             return (base.SaveChangesAsync(true, cancellationToken));
         }
+        public override int SaveChanges()
+        {
+            UpdateModificationDate();
 
+            return base.SaveChanges();
+        }
         private void UpdateModificationDate()
         {
             var selectedEntityList = ChangeTracker.Entries()

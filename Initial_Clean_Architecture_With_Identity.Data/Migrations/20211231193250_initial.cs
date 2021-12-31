@@ -62,15 +62,15 @@ namespace Initial_Clean_Architecture_With_Identity.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LogLevel = table.Column<int>(type: "int", nullable: false),
                     Message = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Exception = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Path = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
-                    Method = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Proprties = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Exception = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Path = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
+                    Method = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Proprties = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreationDate = table.Column<DateTime>(type: "SmallDateTime", nullable: false, defaultValueSql: "GETUTCDATE()"),
                     ResponseStatusCode = table.Column<int>(type: "int", nullable: false),
-                    ResponseStatusMessage = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TraceIdentifier = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ResponseStatusMessage = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TraceIdentifier = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

@@ -4,5 +4,6 @@ public interface IUnitOfWork : IDisposable
 {
     IRepositoryAsync<TEntity> GetRepository<TEntity>() where TEntity : class;
     Task<int> SaveChangesAsync();
+    int SaveChanges();
 }
 

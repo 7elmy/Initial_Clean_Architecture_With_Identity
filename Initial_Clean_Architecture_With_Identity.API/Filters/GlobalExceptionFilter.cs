@@ -28,12 +28,12 @@ public class GlobalExceptionFilter : Attribute, IExceptionFilter
             context.Result = new BadRequestObjectResult(errorResponse);
         }
 
-        _loggerService.LogAsync(context.HttpContext, new Log()
+        _loggerService.Log(context.HttpContext, new Log()
         {
             Exception = exception,
             Message = nameof(Exception),
-            LogLevel = LogLevel.Warning,
-        }, isResponse: true);
+            LogLevel = LogLevel.Error,
+        });
     }
 }
 

@@ -129,7 +129,6 @@ namespace Initial_Clean_Architecture_With_Identity.Data.Migrations
                         .HasDefaultValueSql("GETUTCDATE()");
 
                     b.Property<string>("Exception")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("LogLevel")
@@ -140,32 +139,26 @@ namespace Initial_Clean_Architecture_With_Identity.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Method")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Path")
-                        .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("Proprties")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ResponseStatusCode")
                         .HasColumnType("int");
 
                     b.Property<string>("ResponseStatusMessage")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TraceIdentifier")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

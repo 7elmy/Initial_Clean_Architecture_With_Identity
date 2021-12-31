@@ -7,5 +7,6 @@ public interface ILoggerService
 {
     Task<int> LogAsync(Log log);
     Task<int> LogAsync(HttpContext context, Log log, bool isResponse = false);
+    int Log(HttpContext context, Log log, bool isResponse = false);
 }
 

@@ -9,62 +9,65 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
-var swaggerSettings = new SwaggerSettings();
-builder.Configuration.GetSection(swaggerSettings.GetType().Name).Bind(swaggerSettings);
 
-Services();
+ConfigureServices();
 
 var app = builder.Build();
 
-PipeLine();
+ConfigureDatabase();
 
-void Services()
+ConfigurePipeLine();
+
+void ConfigureServices()
 {
     builder.Services.InstallServices(builder.Configuration, Assembly.GetExecutingAssembly());
+    ConfigureOutServices();
 }
 
-void PipeLine()
+void ConfigureOutServices()
+{
+    var otherAssemblies = new List<Initial_Clean_Architecture_With_Identity.Helpers.Interfaces.IStartup>()
+    {
+        new Initial_Clean_Architecture_With_Identity.Application.Startup(),
+        new Initial_Clean_Architecture_With_Identity.Data.Startup(),
+    };
+    otherAssemblies.ForEach(x => x.ConfigureServices(builder.Services));
+}
+
+void ConfigurePipeLine()
 {
     if (app.Environment.IsDevelopment())
     {
-        app.UseSwagger();
-        app.UseSwaggerUI();
+        ConfigureSwagger();
     }
-
-    using (var scope = app.Services.CreateScope())
-    {
-        var dataContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        UpdateDatabase(dataContext);
-
-        SetupSwagger(app);
-
-        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
-        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-        SeedData(userManager, roleManager);
-    }
-
-
-
-
     app.UseHttpsRedirection();
-
     app.UseAuthorization();
     app.UseExceptions();
     app.MapControllers();
-
     app.Run();
 }
 
-void SetupSwagger(IApplicationBuilder app)
+void ConfigureDatabase()
 {
+    using var scope = app.Services.CreateScope();
+
+    var dataContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    dataContext.Database.Migrate();
+
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    SeedData(userManager, roleManager);
+}
+
+void ConfigureSwagger()
+{
+    var swaggerSettings = new SwaggerSettings();
+    builder.Configuration.GetSection(swaggerSettings.GetType().Name).Bind(swaggerSettings);
+
     app.UseSwagger();
     app.UseSwaggerUI(c => c.SwaggerEndpoint(swaggerSettings.UIEndpoint, swaggerSettings.Title));
 }
 
-void UpdateDatabase(AppDbContext dataContext)
-{
-    dataContext.Database.Migrate();
-}
 
 void SeedData(UserManager<AppUser> userManager,
    RoleManager<IdentityRole> roleManager)

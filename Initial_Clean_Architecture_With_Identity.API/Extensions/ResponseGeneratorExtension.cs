@@ -17,7 +17,8 @@ public static class ResponseGeneratorExtension
             loggerService.LogAsync(context, new Log()
             {
                 LogLevel = LogLevel.Error,
-                Message = response.ErrorResponse?.ErrorMessages[0]?.Message,
+                Message = response.ErrorResponse.ErrorMessages[0].Message,
+                Exception = response.ErrorResponse.Exeption
             });
         }
         var result = new ObjectResult(resObj);

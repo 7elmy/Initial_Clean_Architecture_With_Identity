@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Initial_Clean_Architecture_With_Identity.Domain\Initial_Clean_Architecture_With_Identity.Domain.csproj" />
+    <ProjectReference Include="..\Initial_Clean_Architecture_With_Identity.Helpers\Initial_Clean_Architecture_With_Identity.Helpers.csproj" />
   </ItemGroup>
 
 </Project>
